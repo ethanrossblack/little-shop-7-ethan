@@ -1,5 +1,6 @@
 class MerchantBulkDiscountsController < ApplicationController
   before_action :set_merchant, only: [:index, :new, :create]
+  before_action :set_merchant_and_bulk_discount, only: [:destroy]
   
   def index
   end
@@ -19,13 +20,23 @@ class MerchantBulkDiscountsController < ApplicationController
     end
   end
 
+  def destroy
+    BulkDiscount.destroy(@bulk_discount.id)
+    flash[:alert] = "Discount #{@bulk_discount.id} destroyed."
+    redirect_to merchant_bulk_discounts_path(@merchant)
+  end
+
   private
+    def set_merchant
+      @merchant = Merchant.find(params[:merchant_id])
+    end
 
-  def set_merchant
-    @merchant = Merchant.find(params[:merchant_id])
-  end
+    def bulk_discount_params
+      params.require(:bulk_discount).permit(:discount, :quantity)
+    end
 
-  def bulk_discount_params
-    params.require(:bulk_discount).permit(:discount, :quantity)
-  end
+    def set_merchant_and_bulk_discount
+      @merchant = Merchant.find(params[:merchant_id])
+      @bulk_discount = BulkDiscount.find(params[:id])
+    end
 end

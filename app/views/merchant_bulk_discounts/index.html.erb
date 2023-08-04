@@ -19,6 +19,11 @@
               <b><%= bd.discount %>%</b> off purchases of <b><%= bd.quantity %></b> or more items.
             </p>
           </div>
+          <div class="card-footer">
+            <%= form_with model: bd, url: merchant_bulk_discount_path(@merchant, bd), method: :delete do |f| %>
+              <%= f.button "Delete", method: :delete, class: "btn btn-danger btn-sm"%>
+            <% end %>
+          </div>
         </div>
       </div>
     <% end %>
