@@ -12,10 +12,9 @@ Rails.application.routes.draw do
 
   resources :merchants, only: :show do
     get "/dashboard", to: "merchants#show"
-
     resources :items, except: [:destroy], controller: "merchant_items"
-
-    resources :invoices, only: [:index, :show], controller: "merchant_invoices" 
+    resources :invoices, only: [:index, :show], controller: "merchant_invoices"
+    resources :bulk_discounts, only: [:index, :show], controller: "merchant_bulk_discounts"
   end
 
   resources :invoice_items, only: [:update], controller: "merchant_invoice_items"
