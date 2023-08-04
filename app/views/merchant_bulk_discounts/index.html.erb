@@ -4,12 +4,13 @@
   <div class="row pb-5">
     <div class="col">
       <h2>Bulk Discounts</h2>
+      <%= link_to "Create New Bulk Discount", new_merchant_bulk_discount_path(@merchant), class: "btn btn-primary mt-3"%>
     </div>
   </div>
   <div class="row row-cols-2 row-cols-md-3">
     <% @merchant.bulk_discounts.each do |bd| %>
       <div class="col-6 col-md-4">
-        <div class="card" id="bulk_discount_<%= bd.id %>">
+        <div class="card mb-3" id="bulk_discount_<%= bd.id %>">
           <div class="card-body">
             <%= link_to merchant_bulk_discount_path(@merchant, bd), class: "card-link" do %>
               <h4 class="card-title">Discount <%= bd.id %></h4>
