@@ -1,12 +1,31 @@
 class MerchantBulkDiscountsController < ApplicationController
-  before_action :set_merchant, only: [:index]
+  before_action :set_merchant, only: [:index, :new, :create]
   
   def index
+  end
+
+  def new
+    @bulk_discount = @merchant.bulk_discounts.new
+  end
+
+  def create
+    bulk_discount = @merchant.bulk_discounts.new(bulk_discount_params)
+    if bulk_discount.save
+      flash[:success] = "Bulk Discount created successfully."
+      redirect_to merchant_bulk_discounts_path
+    else
+      flash[:alert] = "Error: #{error_message(bulk_discount.errors)}."
+      redirect to new_merchant_bulk_discount_path
+    end
   end
 
   private
 
   def set_merchant
     @merchant = Merchant.find(params[:merchant_id])
+  end
+
+  def bulk_discount_params
+    params.require(:bulk_discount).permit(:discount, :quantity)
   end
 end
