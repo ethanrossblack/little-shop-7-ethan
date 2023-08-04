@@ -231,4 +231,15 @@ RSpec.describe "Merchant Dashboard Page", type: :feature do
       end
     end
   end
+
+  # SOLO PROJECT BULK DISCOUNTS STORY 1
+  it "has a link to view all discounts" do
+    visit merchant_dashboard_path(@merchant_1)
+    
+    expect(page).to have_link("View Discounts", href: merchant_bulk_discounts_path(@merchant_1)).once
+
+    click_link("View Discounts", href: merchant_bulk_discounts_path(@merchant_1))
+
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1))
+  end
 end

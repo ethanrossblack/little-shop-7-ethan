@@ -3,6 +3,9 @@
 <%# image_tag(@merchant_photo.url["thumb"]) %>
 
 <div class="container">
+  <div class="row">
+    <%= link_to "View Discounts", merchant_bulk_discounts_path(@merchant) %>
+  </div>
   <div class="row pb-5">
     <div id="items_to_be_shipped" class="col">
       <div class="text-center bg-dark-subtle border-top border-black border-5 p-2 mb-4">
