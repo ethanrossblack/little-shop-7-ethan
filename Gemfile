@@ -50,9 +50,9 @@ gem "bootsnap", require: false
 
 gem "bootstrap", "~> 5.3.0.alpha3"
 
-gem "bootstrap", "~> 5.3.0.alpha3"
-
 gem "faraday"
+
+gem "faker"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -64,6 +64,7 @@ group :development, :test do
   gem "orderly"
   gem "shoulda-matchers"
   gem "simplecov"
+  gem "factory_bot_rails"
 end
 
 group :development do
