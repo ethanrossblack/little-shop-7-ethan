@@ -35,7 +35,7 @@ RSpec.describe BulkDiscount, type: :model do
   end
 
   describe "Class Methods" do
-    describe "best_discount" do
+    describe ".best_discount" do
       it "returns the best discount for a provided invoice_item" do
         expect(BulkDiscount.best_discount(@invoice_item_1_1a.quantity)).to eq(@discount_1a)
         expect(BulkDiscount.best_discount(@invoice_item_1_2a.quantity)).to eq(nil)
