@@ -42,4 +42,20 @@ class Invoice < ApplicationRecord
   def merchant_revenue_to_currency(merchant_id)
     ActiveSupport::NumberHelper::number_to_currency(merchant_revenue(merchant_id).to_f / 100)
   end
+
+  # Status of trying to solve this problem with an active record query
+  # def merchant_bulk_discount_revenue(merchant_id)
+  #   invoice_items
+  #   .select("invoice_items.*, MAX(discount) as best_discount")
+  #   .joins(:bulk_discounts)
+  #   .where("invoice_items.quantity >= bulk_discounts.quantity")
+  #   .where("items.merchant_id = ?", merchant_id)
+  #   .where("bulk_discounts.merchant_id = ?", merchant_id)
+  #   .group("invoice_items.id")
+  # end
+
+  def merchant_bulk_discount_revenue_dollars(merchant_id)
+    merchant_invoice_items(merchant_id).sum_bulk_discount_unit_price * 0.01
+  end
+
 end
