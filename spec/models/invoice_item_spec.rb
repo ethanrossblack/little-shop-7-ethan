@@ -35,21 +35,24 @@ RSpec.describe InvoiceItem, type: :model do
       end
     end
 
-    describe "#bulk_discount" do
+    describe "Bulk Discount Methods" do
       before :each do
         # Merchants
         @merchant_a = create(:merchant)
+        @merchant_b = create(:merchant)
     
         # Bulk Discounts
         @discount_1a = create(:bulk_discount, discount: 20, quantity: 10, merchant_id: @merchant_a.id)
         @discount_2a = create(:bulk_discount, discount: 30, quantity: 15, merchant_id: @merchant_a.id)
         @discount_3a = create(:bulk_discount, discount: 15, quantity: 6, merchant_id: @merchant_a.id)
         @discount_4a = create(:bulk_discount, discount: 10, quantity: 20, merchant_id: @merchant_a.id)
+        
+        @discount_1b = create(:bulk_discount, discount: 99, quantity: 1, merchant_id: @merchant_b.id)
     
         # Items
         @item_1a = create(:item, merchant_id: @merchant_a.id, unit_price: 10000)
         @item_2a = create(:item, merchant_id: @merchant_a.id, unit_price: 1000)
-        @item_3a = create(:item, merchant_id: @merchant_a.id, unit_price: 5000)
+        @item_3a = create(:item, merchant_id: @merchant_a.id, unit_price: 10000)
     
         # Invoice
         @invoice_1 = create(:invoice)
@@ -60,10 +63,26 @@ RSpec.describe InvoiceItem, type: :model do
         @invoice_item_1_3a = create(:invoice_item, quantity: 15, unit_price: @item_3a.unit_price, item_id: @item_3a.id, invoice_id: @invoice_1.id)
       end
 
-      it "returns the best bulk discount elligible for the invoice_item instance" do
-        expect(@invoice_item_1_1a.bulk_discount).to eq @discount_1a
-        expect(@invoice_item_1_2a.bulk_discount).to eq nil
-        expect(@invoice_item_1_3a.bulk_discount).to eq @discount_2a
+      describe "#best_bulk_discount" do
+        it "returns the best eligible bulk_discount for an invoice_item instance from its associated merchant" do
+          expect(@invoice_item_1_1a.best_bulk_discount).to eq @discount_1a
+          expect(@invoice_item_1_3a.best_bulk_discount).to eq @discount_2a
+        end
+
+        it "returns nil if an invoice_item is not eligible for a bulk discount" do
+          expect(@invoice_item_1_2a.best_bulk_discount).to eq nil
+        end
+      end
+
+      describe "#bulk_discount_unit_price" do
+        it "returns the discounted price (in cents) for a single invoice_item after applying the best eligible bulk_discount" do
+          expect(@invoice_item_1_1a.bulk_discount_unit_price).to eq 8000
+          expect(@invoice_item_1_3a.bulk_discount_unit_price).to eq 7000
+        end
+        
+        it "returns an invoice_items default unit_price if that invoice_item is not eligible for a bulk_discount" do
+          expect(@invoice_item_1_2a.bulk_discount_unit_price).to eq(@invoice_item_1_2a.unit_price)
+        end
       end
     end
   end

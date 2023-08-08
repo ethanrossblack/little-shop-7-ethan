@@ -12,4 +12,21 @@ class InvoiceItem < ApplicationRecord
   def dollar_price
     unit_price * 0.01
   end
+
+  def best_bulk_discount
+    bulk_discount = bulk_discounts
+    .where("? >= bulk_discounts.quantity", quantity)
+    .order(discount: :desc)
+    .first
+  end
+
+  def bulk_discount_unit_price
+    bulk_discount = best_bulk_discount
+
+    if bulk_discount
+      unit_price - (unit_price * (bulk_discount.discount * 0.01))
+    else
+      unit_price
+    end
+  end
 end
