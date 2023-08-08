@@ -240,8 +240,10 @@ RSpec.describe "Merchant Invoice Show Page", type: :feature do
       it "the total discounted revenue for a merchant from an invoice which includes bulk discounts in the calculation" do
         visit merchant_invoice_path(@merchant_a, @invoice_1)
 
-        within("#total-discounted-revenue") do
-          expect(page).to have_content(@invoice_1.merchant_discounted_revenue_dollars(@merchant_a).round(2))
+        expected = ActiveSupport::NumberHelper::number_to_currency(@invoice_1.merchant_discounted_revenue_dollars(@merchant_a.id))
+
+        within("#merchant_invoice_discounted_revenue") do
+          expect(page).to have_content(expected)
         end
       end
     end

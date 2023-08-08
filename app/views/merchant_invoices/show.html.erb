@@ -8,6 +8,7 @@
       <p><b>Status: </b><%= @invoice.status.titleize %></p>
       <p><b>Created on: </b><%= @invoice.formatted_date %></p>
       <p id="merchant_invoice_revenue"><b>Total Revenue: </b><%= @invoice.merchant_revenue_to_currency(@merchant.id) %></p>
+      <p id="merchant_invoice_discounted_revenue"><b>Total Discounted Revenue: </b><%= number_to_currency(@invoice.merchant_discounted_revenue_dollars(@merchant.id)) %></p>
       <div id="merchant_invoice_customer_info">
         <h2>Customer:</h2>
         <p><%= @invoice.customer.full_name %></p>
