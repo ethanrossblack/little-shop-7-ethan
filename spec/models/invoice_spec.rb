@@ -139,7 +139,7 @@ RSpec.describe Invoice, type: :model do
       end
     end
 # ================================================================
-    describe "#merchant_bulk_discount_revenue_dollars" do
+    describe "#merchant_discounted_revenue_dollars" do
       before :each do
         # Merchants
         @merchant_a = create(:merchant)
@@ -172,8 +172,8 @@ RSpec.describe Invoice, type: :model do
       end
 
       it "returns the total discounted revenue in dollars for a merchant with bulk discounts applied" do
-        expect(@invoice_1.merchant_bulk_discount_revenue_dollars(@merchant_a.id)).to eq(2350)
-        expect(@invoice_1.merchant_bulk_discount_revenue_dollars(@merchant_b.id)).to eq(50)
+        expect(@invoice_1.merchant_discounted_revenue_dollars(@merchant_a.id)).to eq(2350)
+        expect(@invoice_1.merchant_discounted_revenue_dollars(@merchant_b.id)).to eq(50)
       end
     end
   end

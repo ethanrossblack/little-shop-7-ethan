@@ -54,7 +54,7 @@ class Invoice < ApplicationRecord
   #   .group("invoice_items.id")
   # end
 
-  def merchant_bulk_discount_revenue_dollars(merchant_id)
+  def merchant_discounted_revenue_dollars(merchant_id)
     merchant_invoice_items(merchant_id).sum_bulk_discount_unit_price * 0.01
   end
 
