@@ -14,7 +14,7 @@ class InvoiceItem < ApplicationRecord
   end
 
   def best_bulk_discount
-    bulk_discount = bulk_discounts
+    bulk_discounts
     .where("? >= bulk_discounts.quantity", quantity)
     .order(discount: :desc)
     .first
@@ -28,5 +28,9 @@ class InvoiceItem < ApplicationRecord
     else
       unit_price
     end
+  end
+
+  def self.sum_bulk_discount_unit_price
+    InvoiceItem.sum{ |ii| ii.bulk_discount_unit_price * ii.quantity }
   end
 end
