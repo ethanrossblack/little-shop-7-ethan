@@ -58,4 +58,8 @@ class Invoice < ApplicationRecord
     merchant_invoice_items(merchant_id).sum_bulk_discount_unit_price * 0.01
   end
 
+  def discounted_revenue_dollars
+    invoice_items.sum_bulk_discount_unit_price * 0.01
+  end
+
 end
