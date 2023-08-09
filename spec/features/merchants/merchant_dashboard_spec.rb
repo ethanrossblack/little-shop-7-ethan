@@ -181,7 +181,7 @@ RSpec.describe "Merchant Dashboard Page", type: :feature do
     it "lists the names of all items that are ordered and not shipped from uncancelled invoices" do
       visit merchant_dashboard_path(@merchant_1)
 
-      within("div#items_to_be_shipped") do
+      within("#items_to_be_shipped") do
         expect(page).to have_content(@item_3.name, count: 1)
         expect(page).to have_content(@item_4.name, count: 1)
 
@@ -198,13 +198,13 @@ RSpec.describe "Merchant Dashboard Page", type: :feature do
 
     it "shows the invoice id next to each item to be shipped" do
       visit merchant_dashboard_path(@merchant_1)
+      
+      within("#items_to_be_shipped") do
+        expect(page).to have_content("Invoice ##{@invoice_3.id}", count: 1)
+        expect(page).to have_content("Invoice ##{@invoice_4.id}", count: 1)
 
-      within("div#items_to_be_shipped") do
-        expect(page).to have_content(@invoice_3.id, count: 1)
-        expect(page).to have_content(@invoice_4.id, count: 1)
-
-        expect(page).to_not have_content(@invoice_1.id)
-        expect(page).to_not have_content(@invoice_2.id)
+        expect(page).to_not have_content("Invoice ##{@invoice_1.id}")
+        expect(page).to_not have_content("Invoice ##{@invoice_2.id}")
       end
     end
 
@@ -212,7 +212,7 @@ RSpec.describe "Merchant Dashboard Page", type: :feature do
       visit merchant_dashboard_path(@merchant_1)
 
       # maybe add the direct path for more accurate testing? Maybe even the advanced route?
-      within("div#items_to_be_shipped") do
+      within("#items_to_be_shipped") do
         expect(page).to have_link("#{@invoice_3.id}", count: 1)
         expect(page).to have_link("#{@invoice_4.id}", count: 1)
       end
@@ -221,12 +221,13 @@ RSpec.describe "Merchant Dashboard Page", type: :feature do
     it "Has the invoice created at date formatted and orders by oldest invoice date" do
       visit merchant_dashboard_path(@merchant_1)
 
-      within("div#items_to_be_shipped") do
-        earlier = "#{@invoice_3.id}"
-        later = "#{@invoice_4.id}"
+      within("#items_to_be_shipped") do
+        earlier = page.find("#item_#{@item_3.id}")
+        later = page.find("#item_#{@item_4.id}")
 
         expect(page).to have_content("Saturday, January 1, 2000")
         expect(page).to have_content("Sunday, January 1, 2023")
+
         expect(earlier).to appear_before(later)
       end
     end
