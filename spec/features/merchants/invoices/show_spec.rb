@@ -204,7 +204,7 @@ RSpec.describe "Merchant Invoice Show Page", type: :feature do
     end
     # ======= END STORY 18 TESTS =======
 
-    # === Start Bulk Discount Story 6 Tests ===
+    # === Bulk Discount Tests ===
     describe "Bulk Discount Application" do
       before :each do
         # Merchants
@@ -236,8 +236,9 @@ RSpec.describe "Merchant Invoice Show Page", type: :feature do
 
         @invoice_item_1_1b = create(:invoice_item, quantity: 2, unit_price: @item_1b.unit_price, item_id: @item_1b.id, invoice_id: @invoice_1.id)
       end
-
-      it "the total discounted revenue for a merchant from an invoice which includes bulk discounts in the calculation" do
+      
+      # === Start Bulk Discount Story 6 Tests ===
+      it "displays the total discounted revenue for a merchant from an invoice which includes bulk discounts in the calculation" do
         visit merchant_invoice_path(@merchant_a, @invoice_1)
 
         expected = ActiveSupport::NumberHelper::number_to_currency(@invoice_1.merchant_discounted_revenue_dollars(@merchant_a.id))
@@ -246,7 +247,28 @@ RSpec.describe "Merchant Invoice Show Page", type: :feature do
           expect(page).to have_content(expected)
         end
       end
+      # === End Bulk Discount Story 6 Tests ===
+      
+      # === Start Bulk Discount Story 7 Tests ===
+      it "displays next to every discounted invoice item a link to the applied bulk discount show page" do
+        visit merchant_invoice_path(@merchant_a, @invoice_1)
+        
+        within("#invoice_item_#{@invoice_item_1_1a.id}_discount") do
+          expect(page).to have_link(href: merchant_bulk_discount_path(@merchant_a, @discount_1a))
+        end
+        
+        within("#invoice_item_#{@invoice_item_1_3a.id}_discount") do
+          expect(page).to have_link(href: merchant_bulk_discount_path(@merchant_a, @discount_2a))
+        end
+      end
+      
+      
+      
+      
+      # === End Bulk Discount Story 7 Tests ===
+
     end
-    # === End Bulk Discount Story 6 Tests ===
+
+
   end
 end
