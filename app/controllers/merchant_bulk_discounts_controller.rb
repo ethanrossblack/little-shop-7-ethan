@@ -1,6 +1,6 @@
 class MerchantBulkDiscountsController < ApplicationController
   before_action :set_merchant, only: [:index, :new, :create]
-  before_action :set_merchant_and_bulk_discount, only: [:destroy, :show]
+  before_action :set_merchant_and_bulk_discount, only: [:destroy, :show, :edit, :update]
   
   def index
     @holidays = HolidayService.new.get_next_3_holidays
@@ -18,6 +18,19 @@ class MerchantBulkDiscountsController < ApplicationController
     else
       flash[:alert] = "Error: #{error_message(bulk_discount.errors)}."
       redirect to new_merchant_bulk_discount_path
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @bulk_discount.update(bulk_discount_params)
+      redirect_to merchant_bulk_discount_path(@merchant, @bulk_discount)
+      flash[:success] = "Bulk Discount Successfully Updated"
+    else
+      redirect_to edit_merchant_bulk_discount_path(@merchant, @bulk_discount)
+      flash[:alert] = "Error: #{error_message(@bulk_discount.errors)}"
     end
   end
 

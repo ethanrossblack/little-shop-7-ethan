@@ -1,0 +1,22 @@
+<div class="container">
+  <h2>Edit Discount <%= @bulk_discount.id %></h2>
+  <%= form_with model: @bulk_discount, url: merchant_bulk_discount_path(@merchant, @bulk_discount), id: "new_bulk_discount_form", local: true do |f| %>
+    <div class="row">
+      <div class="col-auto">
+        <%= f.label :discount, class: "form-label" %>
+        <div class="input-group mb-3">
+          <%= f.number_field :discount, in: 1..100, class: "form-control" %>
+          <span class="input-group-text">% off</span>
+        </div>
+      </div>
+      <div class="col-auto">
+        <%= f.label :quantity, class: "form-label" %>
+        <div class="input-group mb-3">
+          <%= f.number_field :quantity, class: "form-control" %>
+          <span class="input-group-text">items or more</span>
+        </div>
+      </div>
+    </div>
+    <%= f.button "Edit Bulk Discount", class: "btn btn-primary" %>
+  <% end %>
+</div>
