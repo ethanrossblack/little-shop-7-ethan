@@ -168,9 +168,9 @@ RSpec.describe "Admin Dashboard Page", type: :feature do
   it "displays each incomplete invoice, oldest to newest" do 
 
     visit admin_index_path
-    
+
     within ".incomplete-invoices" do 
-      expect(page).to_not have_content(@invoice_9.id)
+      expect(page).to_not have_content("Invoice ##{@invoice_9.id}")
     end
 
     within("#invoice-#{@invoice_1.id}") do

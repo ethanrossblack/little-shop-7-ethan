@@ -7,9 +7,7 @@ RSpec.describe "Bulk Discount New Page", type: :feature do
     visit new_merchant_bulk_discount_path(@merchant)
   end
   
-  it "has a form to add a new bulk discount" do
-    save_and_open_page
-    
+  it "has a form to add a new bulk discount" do    
     within("#new_bulk_discount_form") do
       expect(page).to have_field("Discount")
       expect(page).to have_field("Quantity")
