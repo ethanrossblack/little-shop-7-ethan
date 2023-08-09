@@ -33,3 +33,5 @@ coverage
 /env.yml
 
 .DS_Store
+
+unsplash_service.rb
