@@ -34,4 +34,4 @@ coverage
 
 .DS_Store
 
-unsplash_service.rb
+/app/services/unsplash_service.rb
