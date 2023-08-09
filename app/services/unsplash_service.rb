@@ -1,4 +1,4 @@
-# class UnsplashService
+class UnsplashService
   
 #   def get_logo_photo
 #     response = connection.get("/photos/frlKR1JfDok")
@@ -21,4 +21,4 @@
 #   def connection
 #     Faraday.new(url:'https://api.unsplash.com', params: {"client_id" => ENV["UNSPLASH_KEY"]})
 #   end
-# end
+end
