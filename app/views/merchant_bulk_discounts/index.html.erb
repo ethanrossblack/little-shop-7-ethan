@@ -7,7 +7,7 @@
       <%= link_to "Create New Bulk Discount", new_merchant_bulk_discount_path(@merchant), class: "btn btn-primary mt-3"%>
     </div>
   </div>
-  <div class="row row-cols-2 row-cols-md-3">
+  <div class="row row-cols-2 row-cols-md-3" id="bulk_discounts">
     <% @merchant.bulk_discounts.each do |bd| %>
       <div class="col-6 col-md-4">
         <div class="card mb-3" id="bulk_discount_<%= bd.id %>">
