@@ -47,7 +47,7 @@ RSpec.describe "Bulk Discounts Index Page" do
 
   it "each bulk discount has a button near it that deletes the discount" do
     expect(page).to have_content("#{@discount1.discount}% off purchases of #{@discount1.quantity} or more items.")
-
+    
     within("#bulk_discount_#{@discount1.id}") do
       expect(page).to have_button("Delete")
 
@@ -55,8 +55,10 @@ RSpec.describe "Bulk Discounts Index Page" do
     end
 
     expect(current_path).to eq(merchant_bulk_discounts_path(@merchant))
-
-    expect(page).to_not have_content("Discount #{@discount1.id}")
-    expect(page).to_not have_content("#{@discount1.discount}% off purchases of #{@discount1.quantity} or more items.")
+    
+    within("#bulk_discounts") do
+      expect(page).to_not have_content("Discount #{@discount1.id}")
+      expect(page).to_not have_content("#{@discount1.discount}% off purchases of #{@discount1.quantity} or more items.")
+  end
   end
 end

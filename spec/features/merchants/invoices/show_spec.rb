@@ -204,5 +204,49 @@ RSpec.describe "Merchant Invoice Show Page", type: :feature do
     end
     # ======= END STORY 18 TESTS =======
 
+    # === Start Bulk Discount Story 6 Tests ===
+    describe "Bulk Discount Application" do
+      before :each do
+        # Merchants
+        @merchant_a = create(:merchant)
+        @merchant_b = create(:merchant)
+    
+        # Bulk Discounts
+        @discount_1a = create(:bulk_discount, discount: 20, quantity: 10, merchant_id: @merchant_a.id)
+        @discount_2a = create(:bulk_discount, discount: 30, quantity: 15, merchant_id: @merchant_a.id)
+        @discount_3a = create(:bulk_discount, discount: 15, quantity: 6, merchant_id: @merchant_a.id)
+        @discount_4a = create(:bulk_discount, discount: 10, quantity: 20, merchant_id: @merchant_a.id)
+        
+        @discount_1b = create(:bulk_discount, discount: 75, quantity: 1, merchant_id: @merchant_b.id)
+    
+        # Items
+        @item_1a = create(:item, merchant_id: @merchant_a.id, unit_price: 10000)
+        @item_2a = create(:item, merchant_id: @merchant_a.id, unit_price: 10000)
+        @item_3a = create(:item, merchant_id: @merchant_a.id, unit_price: 10000)
+
+        @item_1b = create(:item, merchant_id: @merchant_b.id, unit_price: 10000)
+    
+        # Invoice
+        @invoice_1 = create(:invoice)
+    
+        # Invoice Items
+        @invoice_item_1_1a = create(:invoice_item, quantity: 10, unit_price: @item_1a.unit_price, item_id: @item_1a.id, invoice_id: @invoice_1.id)
+        @invoice_item_1_2a = create(:invoice_item, quantity: 5, unit_price: @item_2a.unit_price, item_id: @item_2a.id, invoice_id: @invoice_1.id)
+        @invoice_item_1_3a = create(:invoice_item, quantity: 15, unit_price: @item_3a.unit_price, item_id: @item_3a.id, invoice_id: @invoice_1.id)
+
+        @invoice_item_1_1b = create(:invoice_item, quantity: 2, unit_price: @item_1b.unit_price, item_id: @item_1b.id, invoice_id: @invoice_1.id)
+      end
+
+      it "the total discounted revenue for a merchant from an invoice which includes bulk discounts in the calculation" do
+        visit merchant_invoice_path(@merchant_a, @invoice_1)
+
+        expected = ActiveSupport::NumberHelper::number_to_currency(@invoice_1.merchant_discounted_revenue_dollars(@merchant_a.id))
+
+        within("#merchant_invoice_discounted_revenue") do
+          expect(page).to have_content(expected)
+        end
+      end
+    end
+    # === End Bulk Discount Story 6 Tests ===
   end
 end

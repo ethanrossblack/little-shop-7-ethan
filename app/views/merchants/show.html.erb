@@ -13,7 +13,7 @@
       </div>
       <ul>
         <% @merchant.items_ready.each do |i| %>
-          <li><%= i.name %> - Invoice #<%= link_to "#{i.invoice_id}", merchant_invoice_path(@merchant, i.invoice_id) %> - <%= i.invoice_created_at %></li>
+          <li id = "item_<%= i.id %>"><%= i.name %> - Invoice #<%= link_to "#{i.invoice_id}", merchant_invoice_path(@merchant, i.invoice_id) %> - <%= i.invoice_created_at %></li>
         <% end %>
       </ul>
     </div>
