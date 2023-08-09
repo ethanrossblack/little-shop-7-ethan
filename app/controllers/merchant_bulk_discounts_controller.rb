@@ -3,6 +3,7 @@ class MerchantBulkDiscountsController < ApplicationController
   before_action :set_merchant_and_bulk_discount, only: [:destroy, :show]
   
   def index
+    @holidays = HolidayService.new.get_next_3_holidays
   end
 
   def new
