@@ -261,14 +261,7 @@ RSpec.describe "Merchant Invoice Show Page", type: :feature do
           expect(page).to have_link(href: merchant_bulk_discount_path(@merchant_a, @discount_2a))
         end
       end
-      
-      
-      
-      
       # === End Bulk Discount Story 7 Tests ===
-
     end
-
-
   end
 end

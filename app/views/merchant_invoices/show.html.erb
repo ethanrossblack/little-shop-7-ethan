@@ -42,11 +42,8 @@
                   <%= form_with model: invoice_item, method: :patch, local: true do |form| %>
                     <%= form.hidden_field :invoice_id, value: @invoice.id %>
                     <%= form.hidden_field :merchant_id, value: @merchant.id %>
-                    <div class="col-auto">
-                      <%= form.select(:status, [["Pending", "pending"], ["Packaged", "packaged"], ["Shipped", "shipped"]], { selected: invoice_item.status}, { class: "form-select col-auto" }) %>
-
-                      <%= form.submit "Update Item Status" %>
-                    </div>
+                    <%= form.select(:status, [["Pending", "pending"], ["Packaged", "packaged"], ["Shipped", "shipped"]], { selected: invoice_item.status}) %>
+                    <%= form.submit "Update Item Status" %>
                   <% end %>
                 </td>
               </tr>
