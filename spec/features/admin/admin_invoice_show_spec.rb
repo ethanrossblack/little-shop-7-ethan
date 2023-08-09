@@ -118,8 +118,6 @@ RSpec.describe "Admin Invoice Show Page", type: :feature do
     it "displays the total discounted revenue from this invoice which includes bulk discounts in the calculation" do
       visit admin_invoice_path(@invoice_01)
 
-      save_and_open_page
-
       expected = ActiveSupport::NumberHelper::number_to_currency(@invoice_01.discounted_revenue_dollars)
 
       within("#invoice_discounted_revenue") do

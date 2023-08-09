@@ -28,4 +28,17 @@
       </div>
     <% end %>
   </div>
+  <div class="row">
+    <div class="col" id="upcoming-holidays">
+      <h2>Upcoming Holidays</h2>
+      <ul>
+      <% @holidays.each do |h| %>
+        <li class="holiday">
+          <p class="holiday_name"><%= "#{h.name}" %></p>
+          <p class="holiday_date"><%= "#{h.date.to_fs(:long_ordinal)}" %></p>
+        </li>
+      <% end %>
+      <ul>
+    </div>
+  </div>
 </div>

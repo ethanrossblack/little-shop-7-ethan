@@ -59,6 +59,19 @@ RSpec.describe "Bulk Discounts Index Page" do
     within("#bulk_discounts") do
       expect(page).to_not have_content("Discount #{@discount1.id}")
       expect(page).to_not have_content("#{@discount1.discount}% off purchases of #{@discount1.quantity} or more items.")
+    end
   end
+
+  it "has a section labeled 'Upcoming Holidays' for the next three upcoming holidays in the US" do
+    within("#upcoming-holidays") do
+      expect(page).to have_content("Upcoming Holidays")
+
+      expect(page).to have_css(".holiday", count: 3)
+
+      within(first(".holiday")) do
+        expect(page).to have_css(".holiday_name")
+        expect(page).to have_css(".holiday_date")
+      end
+    end
   end
 end
